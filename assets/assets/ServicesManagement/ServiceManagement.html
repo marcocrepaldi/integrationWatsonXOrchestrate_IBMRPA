@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Service Management System</title>
+
+<style type="text/css">
+#footer {
+height: 40px;
+line-height: 40px;
+position: absolute;
+bottom: 0;
+width: 100%;
+text-align: center;
+background: #333;
+color: #fff;
+font-family: Arial;
+font-size: 12px;
+letter-spacing: 1px;
+}
+</style>
+<script language="javascript">
+
+function RetrieveServices(x)
+{
+	var serviceTypeLength=document.Services.ServiceIndustry.options.length; //retrieve industry service type list length
+	var signedServicesArray=new Array(serviceTypeLength) //create a array whosee length is the number of service industry
+	for(i=0;i<serviceTypeLength;i++)//create array to hold service category related to each industry
+		signedServicesArray[i]=new Array();
+	
+	//assign service categories
+	
+	//healthcare
+	signedServicesArray[0][0]=new Option("Employee Benefits Plan","Employee Benefits Plan");
+	signedServicesArray[0][1]=new Option("Virtual Medical Assistance","Virtual Medical Assistance");
+	signedServicesArray[0][2]=new Option("Mental Health Care","Mental Health Care");
+	signedServicesArray[0][3]=new Option("Onsite Medical Testing","Onsite Medical Testing");
+	//finance
+	signedServicesArray[1][0]=new Option("Corporate Credit Card","Corporate Credit Card");
+	signedServicesArray[1][1]=new Option("Fraud Protection","Fraud Protection");
+	signedServicesArray[1][2]=new Option("Tax Consultation","Tax Consultation");
+	signedServicesArray[1][3]=new Option("External Audit","External Audit");
+	//Federal
+	signedServicesArray[2][0]=new Option("Infrastructure Consultation","Infrastructure Consultation");
+	signedServicesArray[2][1]=new Option("Transport Security","Transport Security");
+	signedServicesArray[2][2]=new Option("Education Funding","Education Funding");
+	signedServicesArray[2][3]=new Option("Green Technology Equipment","Green Technology Equipment");
+	//Telecom
+	signedServicesArray[3][0]=new Option("Fibre Internet","Fibre Internet");
+	signedServicesArray[3][1]=new Option("Tieline Solution","Tieline Solution");
+	signedServicesArray[3][2]=new Option("Business Devices","Business Devices");
+	signedServicesArray[3][3]=new Option("Communication Equipment","Communication Equipment");
+	//Insurance
+	signedServicesArray[4][0]=new Option("Warehouse Insurance","Warehouse Insurance");
+	signedServicesArray[4][1]=new Option("Loan Insurance","Loan Insurance");
+	signedServicesArray[4][2]=new Option("Merchandise Insurance","Merchandise Insurance");
+	signedServicesArray[4][3]=new Option("Medical Insurance","Medical Insurance");
+	
+	var signedServices=document.Services.SignedServices; 
+	
+	for(m=signedServices.options.length-1;m>=0;m--)
+		signedServices.options[m]=null;//clean the service category first
+	
+	for(j=0;j<signedServicesArray[x].length;j++)
+	{//fill in service category based on industry selected
+		signedServices.options[j]=new Option(signedServicesArray[x][j].value ,signedServicesArray[x][j].value)
+		
+	}
+	//serviceCategory.options[0].selected=true;//select the 1st as default
+}
+
+function CloseCurrentPage()
+{
+　　if (confirm("Are you sure to exit Service Management System？")) 
+	{
+		window.location.href="about:blank";
+  		window.close();
+	} 
+ }
+ 
+ function AddNewService()
+{
+	var StatusLabel=document.getElementById("StatusOfAddingServices");
+	
+	if (document.Services.clientID.value == "")
+		StatusLabel.innerText = "Client ID can't be empty.";
+	else	 
+		StatusLabel.innerText = "Signed services have been added or updated successfully.";
+ }
+</script>
+</head>
+<body>
+	<img src="Header.png" width="100%">
+	<br><br>
+	<form name="Services">
+		<h3 align = "center">Service Management System</h3>
+		<br>
+		<table align = "center">
+			<tr>
+				<td align="left"> Client ID: </td>
+				<td><input type="text" name = "clientID" style="height: 22px; "></td>
+				<td align = "left"> Client Name:</td>
+				<td><input type="text" name="clientName" style="width: 210px; height: 24px"></td>
+			</tr>
+			<tr>
+				<td align="left">Industry:</td>
+				<td>
+					<select name="ServiceIndustry" onchange="RetrieveServices(options.selectedIndex)" style="width: 151px; ">
+						<option value="Healthcare">Healthcare</option>
+						<option value="Finance">Finance</option>
+						<option value="Federal">Federal</option>
+						<option value="Telecom">Telecom</option>
+						<option value="Insurance">Insurance</option>
+					</select>
+				</td>
+				<td align="left">Signed Services:</td>
+				<td>
+					<select name="SignedServices" style="width: 213px" multiple="multiple">
+					<option value="Employee Benefits Plan">Employee Benefits Plan</option>
+					<option value="Virtual Medical Assistance">Virtual Medical Assistance</option>
+					<option value="Mental Health Care">Mental Health Care</option>
+					<option value="Onsite Medical Testing">Onsite Medical Testing</option>
+					</select> 
+				</td>
+			</tr>
+			<tr>
+				<td align="right">Services Fees:</td>
+				<td><input type="text" name = "servicesFees" style="height: 22px; "></td>
+			</tr>
+		</table>
+	</form>
+	<br>
+	<br>
+	<div align="center" style="color:blue"><label id="StatusOfAddingServices"></label></div>
+	<br>
+	<br>
+	<table align = "center">
+	<tr>
+		<td><input type="button" name="Add" value="Add/Update" onclick="AddNewService()" style="width: 144px; height: 30px"/></td>
+		<td><input type="button" name="Exit" value="Exit" onclick="CloseCurrentPage()" style="width: 144px; height: 30px"/></input></td>
+	</tr>
+</table>
+	<br>
+	<br>
+	<br>
+	<div id="footer">IBM Cloud Pak for Business Automation SWAT Tech Jam </div>
+</body>
+</html>
